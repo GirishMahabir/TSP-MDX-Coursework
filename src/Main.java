@@ -12,31 +12,47 @@ public class Main {
         String[] cities_string = ReadCities(filename);
         // Convert cities_string to cities
         City[] cities = populateCity(cities_string);
-        // Starting timer for algorithm.
-        final long start_time = System.nanoTime();
 
-        /*
-                      ######## ALGORITHM ########
-            - Should Return Array of City IDs in order of visits.
-            - Should Return Total Distance Traveled.
-        */
-        // NN Algorithm
-        AlgoResultDS algoResult = TSPNearestNeighbourAlgo.main(cities, cities[0]);
-        // Dijkstra Algorithm
-        // AlgoResultDS algoResult = TSPDijkstraAlgo.main(cities, cities[0]);
+        // Start Timer
+        long startTime = System.nanoTime();
+
+        // Run Nearest Neighbour Algorithm
+//        RunNearestNeighborAlgo(cities, cities[0]);
+        // Run Dijkstra Algorithm
+        RunDijkstraAlgo(cities, cities[0]);
 
 
-
-        // Print the result.
-        System.out.println("Tour: " + Arrays.toString(algoResult.getTour()));
-        System.out.println("Distance: " + algoResult.getDistance());
-
-        // End timer for algorithm.
-        final long end_time = System.nanoTime();
-        System.out.println("Total execution time: " + (end_time - start_time) + "ns");
-
+        // Print Time Taken
+        System.out.println("Time Taken: " + (System.nanoTime() - startTime) + " nanoseconds");
 
     }
+
+    public static void RunDijkstraAlgo(City[] cities, City startingCity) {
+        /*
+         * RunDijkstraAlgo runs the Dijkstra Algorithm.
+         * @param cities: City[] -> Array of cities.
+         * @param startingCity: City -> Starting city.
+         */
+        // Run Dijkstra Algorithm
+        AlgoResultDS result = TSPDijkstraAlgo.main(cities, startingCity);
+        // Print results
+        System.out.println("Tour: " + Arrays.toString(result.getTour()));
+        System.out.println("Distance: " + result.getDistance());
+    }
+
+    public static void RunNearestNeighborAlgo(City[] cities, City startingCity) {
+        /*
+         * RunNearestNeighbourAlgo runs the Nearest Neighbour Algorithm.
+         * @param cities: City[] -> Array of cities.
+         * @param startingCity: City -> Starting city.
+         */
+        // Run Nearest Neighbor Algorithm
+        AlgoResultDS result = TSPNearestNeighbourAlgo.main(cities, startingCity);
+        // Print results
+        System.out.println("Tour: " + Arrays.toString(result.getTour()));
+        System.out.println("Distance: " + result.getDistance());
+    }
+
 
     public static String[] ReadCities(String filename) {
         /*
@@ -55,11 +71,12 @@ public class Main {
         return file_content;
     }
 
+    // populateCity using the new HashMap -> CityManager Data Structure.
     public static City[] populateCity(String[] cities_string) {
         /*
-         * populateCity takes an array of strings and returns an array of City objects.
+         * populateCityManager takes an array of strings and returns a CityManager object.
          * @param cities_string: String[]
-         * @return cities: City[]
+         * @return cityManager: CityManager
          */
         City[] cities = new City[cities_string.length];
 

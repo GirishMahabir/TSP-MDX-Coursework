@@ -6,6 +6,7 @@ final class AlgoResultDS {
         this.tour = tour;
         this.distance = distance;
     }
+
     public int[] getTour() {
         return tour;
     }

@@ -4,9 +4,9 @@ public class City {
     float City_Y_Location;
 
     public City() {
-        City_ID = 0;
-        City_X_Location = 0;
-        City_Y_Location = 0;
+        City_ID = 1; // Default value, 1st city.
+        City_X_Location = 0; // Default value, 0.
+        City_Y_Location = 0; // Default value, 0.
     }
 
     public City(int city_ID, float city_X_Location, float city_Y_Location) {

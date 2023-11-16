@@ -1,122 +1,109 @@
 import java.util.Arrays;
+import java.util.ArrayList;
 
 public class TSPNearestNeighbourAlgo {
-
     /*
     Class to Tackle the Traveling Salesman Problem using the Nearest Neighbor Algorithm.
     */
-
-    public static float Distance(City city1, City city2) {
-        /*
-         * Distance calculates the distance between two cities.
-         * @param city1: City -> 1st City
-         * @param city2: City -> 2nd City
-         * @return float -> Distance between the cities.
-         */
-        float x1 = city1.getCity_X_Location();
-        float y1 = city1.getCity_Y_Location();
-        float x2 = city2.getCity_X_Location();
-        float y2 = city2.getCity_Y_Location();
-
-        return (float) Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2));
-    }
-
     public static float[][] DistanceMatrix(City[] cities) {
         /*
          * DistanceMatrix calculates the distance between all cities and returns a matrix.
          * @param cities: City[] -> Array of cities.
          * @return float[][] -> Matrix of distances between cities.
          */
-        float[][] distance_matrix = new float[cities.length][cities.length];
+
+        int numberOfCities = cities.length;
+        float[][] distance_matrix = new float[numberOfCities][numberOfCities];
 
         for (int i = 0; i < cities.length; i++) {
-            for (int j = i + 1; j < cities.length; j++) {
-                distance_matrix[i][j] = Distance(cities[i], cities[j]);
+            // Loop through all cities and calculate the distance between them.
+            for (int j = i + 1; j < numberOfCities; j++) {
+                // Loop through all cities after the current city.
+                distance_matrix[i][j] = TSPCommon.Distance(cities[i], cities[j]);
+                // Set the distance between the current city and the next city.
                 distance_matrix[j][i] = distance_matrix[i][j];
             }
         }
-
         return distance_matrix;
     }
 
-    public static City ClosestCity(City[] cities, City city, int[] ignoreCities) {
+    public static void printDistanceMatrix(float[][] distance_matrix) {
         /*
-         * ClosestCity returns the closest city to the current city.
-         * @param cities: City[] -> Array of cities.
-         * @param city: City -> Current city.
-         * @param ignoreCities: int[] -> Array of city IDs to ignore.
-         * @return City -> Closest city to the current city.
+         * printDistanceMatrix prints the distance matrix.
+         * @param distance_matrix: float[][] -> Matrix of distances between cities.
          */
-        float[][] distanceMatrix = DistanceMatrix(cities);
-        int cityId = city.getCity_ID();
-        float minDistance = Float.MAX_VALUE;
-        int closestCityId = -1;
-
-        if (ignoreCities == null) {
-            return null;
+        System.out.println("Distance Matrix");
+        // Print in proper rows and columns with proper headings (everything at 2 decimal places)
+        // Print column headings
+        System.out.print("City ID\t\t");
+        for (int i = 0; i < distance_matrix.length; i++) {
+            System.out.print(i + 1 + "\t\t");
         }
-
-        for (City otherCity : cities) {
-            int otherCityId = otherCity.getCity_ID();
-
-            if (otherCityId == cityId || Arrays.binarySearch(ignoreCities, otherCityId) >= 0) {
-                continue;
+        System.out.println();
+        // Print rows
+        for (int i = 0; i < distance_matrix.length; i++) {
+            System.out.print(i + 1 + "\t\t");
+            for (int j = 0; j < distance_matrix.length; j++) {
+                System.out.printf("%.2f\t", distance_matrix[i][j]);
             }
-
-            float distance = distanceMatrix[cityId][otherCityId];
-
-            if (distance < minDistance) {
-                minDistance = distance;
-                closestCityId = otherCityId;
-            }
-        }
-
-        if (closestCityId != -1) {
-            return cities[closestCityId];
-        } else {
-            return null;
+            System.out.println();
         }
     }
 
     public static AlgoResultDS TourDistance(City[] cities, City startingCity) {
         /*
-         * TourDistance calculates the total distance of the tour, Travelling from one city to another.
+         * TourDistance calculates the total distance of the tour, Traveling from one city to another.
          * @param cities: City[] -> Array of cities.
          * @param startingCity: City -> Starting city.
+         * @return AlgoResultDS -> Object containing the total distance and the visited cities.
          */
-        int numCities = cities.length;
         float[][] distanceMatrix = DistanceMatrix(cities);
-        float totalDistance = 0;
-        int[] visitedCities = new int[numCities + 1];
-        boolean[] isVisited = new boolean[numCities];
-        int currentCityIndex = startingCity.getCity_ID();
-        visitedCities[0] = currentCityIndex;
-        isVisited[currentCityIndex] = true;
-        int visitedCount = 1;
+        boolean[] visited = new boolean[cities.length]; // Used to keep track of visited cities.
+        Arrays.fill(visited, false); // Initialize all values to false.
 
-        while (visitedCount < numCities) {
-            float minDistance = Float.MAX_VALUE;
-            int closestCityIndex = -1;
+        int currentCityIndex = startingCity.getCity_ID() - 1; // -1 because array index starts from 0
+        visited[currentCityIndex] = true; // Mark starting city as visited.
+        ArrayList<City> visitedCities = new ArrayList<>(); // Used to keep track of visited cities.
+        visitedCities.add(cities[currentCityIndex]); // Add starting city to visited cities.
 
-            for (int i = 0; i < numCities; i++) {
-                if (!isVisited[i] && i != currentCityIndex && distanceMatrix[currentCityIndex][i] < minDistance) {
-                    minDistance = distanceMatrix[currentCityIndex][i];
-                    closestCityIndex = i;
+        float totalDistance = 0; // Total distance of the tour.
+
+        for (int i = 0; i < cities.length - 1; i++) {
+            /*
+                * Loop through all cities and find the nearest city.
+                * Add the distance to the total distance.
+                * Mark the nearest city as visited.
+                * Add the nearest city to the visited cities.
+                * Set the current city to the nearest city.
+                * Repeat until all cities are visited.
+             */
+            float nearestDistance = Float.MAX_VALUE;
+            int nearestCityIndex = -1;
+
+            for (int j = 0; j < cities.length; j++) {
+                if (!visited[j] && distanceMatrix[currentCityIndex][j] < nearestDistance) {
+                    nearestDistance = distanceMatrix[currentCityIndex][j];
+                    nearestCityIndex = j;
                 }
             }
 
-            if (closestCityIndex != -1) {
-                totalDistance += minDistance;
-                visitedCities[visitedCount] = closestCityIndex;
-                isVisited[closestCityIndex] = true;
-                visitedCount++;
-                currentCityIndex = closestCityIndex;
-            }
+            visited[nearestCityIndex] = true;
+            visitedCities.add(cities[nearestCityIndex]);
+            totalDistance += nearestDistance;
+            currentCityIndex = nearestCityIndex;
         }
 
-        totalDistance += distanceMatrix[currentCityIndex][startingCity.getCity_ID()];
-        visitedCities[visitedCount] = startingCity.getCity_ID();
-        return new AlgoResultDS(visitedCities, totalDistance);
+        // Add distance back to the starting city
+        totalDistance += distanceMatrix[currentCityIndex][startingCity.getCity_ID() - 1];
+        visitedCities.add(startingCity);
+
+        // Convert ArrayList to Array (To keep standard return type)
+        int[] visitedCitiesArray = new int[visitedCities.size()];
+        for (int i = 0; i < visitedCities.size(); i++) {
+            visitedCitiesArray[i] = visitedCities.get(i).getCity_ID();
+        }
+
+        return new AlgoResultDS(visitedCitiesArray, totalDistance);
     }
 
     public static AlgoResultDS main(City[] cities, City startingCity) {
