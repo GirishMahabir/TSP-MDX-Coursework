@@ -7,7 +7,7 @@ public class Main {
     public static void main(String[] args) {
         // Declare filename Variable (Dataset of cities)
         String filename = "/home/girish/Documents/MDX/AI/Travelling Salesman Problem" +
-                "/Coursework 1 - Files/sample1-22.txt";
+                "/Coursework 1 - Files/sample4-22.txt";
         // Declare cities Variable (Array of cities)
         String[] cities_string = ReadCities(filename);
         // Convert cities_string to cities
@@ -20,11 +20,25 @@ public class Main {
 //        RunNearestNeighborAlgo(cities, cities[0]);
         // Run Dijkstra Algorithm
         RunDijkstraAlgo(cities, cities[0]);
+        // Run MST Prims Algorithm
+//        RunMSTPrimsAlgo(cities, cities[0]);
 
+        // Print Time Taken in ms
+        System.out.println("Time Taken: " + (System.nanoTime() - startTime) / 1000000 + "ms");
 
-        // Print Time Taken
-        System.out.println("Time Taken: " + (System.nanoTime() - startTime) + " nanoseconds");
+    }
 
+    public static void RunMSTPrimsAlgo(City[] cities, City startingCity) {
+        /*
+         * RunMSTPrimsAlgo runs the MST Prims Algorithm.
+         * @param cities: City[] -> Array of cities.
+         * @param startingCity: City -> Starting city.
+         */
+        // Run MST Prims Algorithm
+        AlgoResultDS result = TSPMSTPrimsAlgo.main(cities, startingCity);
+        // Print results
+        System.out.println("Tour: " + Arrays.toString(result.getTour()));
+        System.out.println("Distance: " + result.getDistance());
     }
 
     public static void RunDijkstraAlgo(City[] cities, City startingCity) {

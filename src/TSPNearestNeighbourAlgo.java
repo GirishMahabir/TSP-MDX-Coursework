@@ -58,6 +58,7 @@ public class TSPNearestNeighbourAlgo {
          * @return AlgoResultDS -> Object containing the total distance and the visited cities.
          */
         float[][] distanceMatrix = DistanceMatrix(cities);
+//        printDistanceMatrix(distanceMatrix);
         boolean[] visited = new boolean[cities.length]; // Used to keep track of visited cities.
         Arrays.fill(visited, false); // Initialize all values to false.
 
