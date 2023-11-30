@@ -5,59 +5,59 @@ public class TSPNearestNeighbourAlgo {
     /*
     Class to Tackle the Traveling Salesman Problem using the Nearest Neighbor Algorithm.
     */
-    public static float[][] DistanceMatrix(City[] cities) {
+    public static float[][] distanceMatrix(City[] cities) {
         /*
-         * DistanceMatrix calculates the distance between all cities and returns a matrix.
+         * distanceMatrix calculates the distance between all cities and returns a matrix.
          * @param cities: City[] -> Array of cities.
          * @return float[][] -> Matrix of distances between cities.
          */
 
         int numberOfCities = cities.length;
-        float[][] distance_matrix = new float[numberOfCities][numberOfCities];
+        float[][] matrix = new float[numberOfCities][numberOfCities];
 
         for (int i = 0; i < cities.length; i++) {
             // Loop through all cities and calculate the distance between them.
             for (int j = i + 1; j < numberOfCities; j++) {
                 // Loop through all cities after the current city.
-                distance_matrix[i][j] = TSPCommon.Distance(cities[i], cities[j]);
+                matrix[i][j] = TSPCommon.Distance(cities[i], cities[j]);
                 // Set the distance between the current city and the next city.
-                distance_matrix[j][i] = distance_matrix[i][j];
+                matrix[j][i] = matrix[i][j];
             }
         }
-        return distance_matrix;
+        return matrix;
     }
 
-    public static void printDistanceMatrix(float[][] distance_matrix) {
+    public static void printDistanceMatrix(float[][] matrix) {
         /*
          * printDistanceMatrix prints the distance matrix.
-         * @param distance_matrix: float[][] -> Matrix of distances between cities.
+         * @param matrix: float[][] -> Matrix of distances between cities.
          */
         System.out.println("Distance Matrix");
         // Print in proper rows and columns with proper headings (everything at 2 decimal places)
         // Print column headings
         System.out.print("City ID\t\t");
-        for (int i = 0; i < distance_matrix.length; i++) {
+        for (int i = 0; i < matrix.length; i++) {
             System.out.print(i + 1 + "\t\t");
         }
         System.out.println();
         // Print rows
-        for (int i = 0; i < distance_matrix.length; i++) {
+        for (int i = 0; i < matrix.length; i++) {
             System.out.print(i + 1 + "\t\t");
-            for (int j = 0; j < distance_matrix.length; j++) {
-                System.out.printf("%.2f\t", distance_matrix[i][j]);
+            for (int j = 0; j < matrix.length; j++) {
+                System.out.printf("%.2f\t", matrix[i][j]);
             }
             System.out.println();
         }
     }
 
-    public static AlgoResultDS TourDistance(City[] cities, City startingCity) {
+    public static AlgoResultDS tourDistance(City[] cities, City startingCity) {
         /*
-         * TourDistance calculates the total distance of the tour, Traveling from one city to another.
+         * tourDistance calculates the total distance of the tour, Traveling from one city to another.
          * @param cities: City[] -> Array of cities.
          * @param startingCity: City -> Starting city.
          * @return AlgoResultDS -> Object containing the total distance and the visited cities.
          */
-        float[][] distanceMatrix = DistanceMatrix(cities);
+        float[][] distanceMatrix = distanceMatrix(cities);
 //        printDistanceMatrix(distanceMatrix);
         boolean[] visited = new boolean[cities.length]; // Used to keep track of visited cities.
         Arrays.fill(visited, false); // Initialize all values to false.
@@ -108,6 +108,6 @@ public class TSPNearestNeighbourAlgo {
     }
 
     public static AlgoResultDS main(City[] cities, City startingCity) {
-        return TourDistance(cities, startingCity);
+        return tourDistance(cities, startingCity);
     }
 }

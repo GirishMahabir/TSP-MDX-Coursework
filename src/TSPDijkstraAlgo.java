@@ -2,7 +2,7 @@ import java.util.Arrays;
 import java.util.ArrayList;
 
 public class TSPDijkstraAlgo {
-    public static AlgoResultDS TourDistance(City[] cities, City startingCity) {
+    public static AlgoResultDS tourDistance(City[] cities, City startingCity) {
         /*
          * TourDistance calculates the total distance of the tour, Traveling from one city to another.
          * @param cities: City[] -> Array of cities.
@@ -19,18 +19,18 @@ public class TSPDijkstraAlgo {
         float distances = 0;
 
         /*
-            * Note the array that will be passed to DistanceArray needs to be adapted every time.
+            * Note the array that will be passed to distanceArray needs to be adapted every time.
             * Visited cities need to be removed from the array.
          */
         while (cities.length >= 1) {
-            float[] distanceArray = DistanceArray(cities, startingCity); // Get the distance array for the current city.
-            int shortestPathIndex = ShortestPathIndex(distanceArray); // Get the shortest path index.
+            float[] distanceArray = distanceArray(cities, startingCity); // Get the distance array for the current city.
+            int shortestPathIndex = shortestPathIndex(distanceArray); // Get the shortest path index.
             City nextCity = cities[shortestPathIndex]; // Get the next city.
             // Add the next city to the path
             Path.add(nextCity.getCityId());
 
             // Remove the next city from the array of cities.
-            cities = RemoveCityFromArray(cities, nextCity);
+            cities = removeCityFromArray(cities, nextCity);
             // Set the next city as the starting city.
             startingCity = nextCity;
 
@@ -50,12 +50,12 @@ public class TSPDijkstraAlgo {
     }
 
     public static AlgoResultDS main(City[] cities, City startingCity) {
-        return TourDistance(cities, startingCity);
+        return tourDistance(cities, startingCity);
     }
 
-    public static float[] DistanceArray(City[] cities, City currentCity) {
+    public static float[] distanceArray(City[] cities, City currentCity) {
         /*
-         * DistanceArray calculates the distance from the current city to all other cities.
+         * distanceArray calculates the distance from the current city to all other cities.
          * @param cities: City[] -> Array of cities.
          * @param startingCity: City -> Starting city.
          * @return float[] -> Array of distances from starting city to each city.
@@ -81,9 +81,9 @@ public class TSPDijkstraAlgo {
         return distanceArray;
     }
 
-    public static City[] RemoveCityFromArray(City[] cities, City cityToRemove) {
+    public static City[] removeCityFromArray(City[] cities, City cityToRemove) {
         /*
-         * RemoveCityFromArray removes a city from an array of cities.
+         * removeCityFromArray removes a city from an array of cities.
          * @param cities: City[] -> Array of cities.
          * @param cityToRemove: City -> City to remove.
          * @return City[] -> Array of cities without the cityToRemove.
@@ -103,7 +103,7 @@ public class TSPDijkstraAlgo {
         return newCities;
     }
 
-    public static int ShortestPathIndex(float[] distanceArray) {
+    public static int shortestPathIndex(float[] distanceArray) {
         /*
          * ShortestPath finds the shortest path from the current city to the next city.
          * @param distanceArray: float[] -> Array of distances from starting city to each city.

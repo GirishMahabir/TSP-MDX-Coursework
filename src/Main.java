@@ -9,9 +9,9 @@ public class Main {
         String filename = scanner.nextLine();
 
         // Declare cities Variable (Array of cities)
-        String[] cities_string = FileTreatment.processFile(filename);
-        // Convert cities_string to cities
-        City[] cities = populateCity(cities_string);
+        String[] citiesString = FileTreatment.processFile(filename);
+        // Convert citiesString to cities
+        City[] cities = populateCity(citiesString);
 
         // Print options for user to choose from.
         String[] availableAlgos = {"1. MST Prims Algorithm", "2. Dijkstra Algorithm", "3. Nearest Neighbor Algorithm"};
