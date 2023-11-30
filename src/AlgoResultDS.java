@@ -1,4 +1,7 @@
 final class AlgoResultDS {
+    /*
+      * Data Structure Class to standardize how the result is returned.
+    */
     private final int[] tour;
     private final float distance;
 
@@ -6,7 +9,6 @@ final class AlgoResultDS {
         this.tour = tour;
         this.distance = distance;
     }
-
     public int[] getTour() {
         return tour;
     }

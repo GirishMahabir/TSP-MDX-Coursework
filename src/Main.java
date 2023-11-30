@@ -1,32 +1,64 @@
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.Arrays;
-
+import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
-        // Declare filename Variable (Dataset of cities)
-        String filename = "/home/girish/Documents/MDX/AI/Travelling Salesman Problem" +
-                "/Coursework 1 - Files/sample4-22.txt";
+
+        // Ask for user input for filename.
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter filename: ");
+        String filename = scanner.nextLine();
+
         // Declare cities Variable (Array of cities)
-        String[] cities_string = ReadCities(filename);
+        String[] cities_string = FileTreatment.processFile(filename);
         // Convert cities_string to cities
         City[] cities = populateCity(cities_string);
 
-        // Start Timer
-        long startTime = System.nanoTime();
+        // Print options for user to choose from.
+        String[] availableAlgos = {"1. MST Prims Algorithm", "2. Dijkstra Algorithm", "3. Nearest Neighbor Algorithm"};
+        System.out.println("Available Algorithms: ");
+        for (String algo : availableAlgos) {
+            System.out.println(algo);
+        }
 
-        // Run Nearest Neighbour Algorithm
-//        RunNearestNeighborAlgo(cities, cities[0]);
-        // Run Dijkstra Algorithm
-        RunDijkstraAlgo(cities, cities[0]);
-        // Run MST Prims Algorithm
-//        RunMSTPrimsAlgo(cities, cities[0]);
-
-        // Print Time Taken in ms
-        System.out.println("Time Taken: " + (System.nanoTime() - startTime) / 1000000 + "ms");
+        // Ask for user input for algorithm.
+        System.out.print("Enter algorithm: ");
+        String algo = scanner.nextLine();
+        // Run algorithm based on input.
+        RunAlgoBasedOnInput(cities, cities[0], algo);
 
     }
+
+    public static void RunAlgoBasedOnInput(City[] cities, City startingCity, String algo) {
+        /*
+         * RunAlgoBasedOnInput runs the algorithm based on the input.
+         * @param cities: City[] -> Array of cities.
+         * @param startingCity: City -> Starting city.
+         * @param algo: String -> Algorithm to run.
+        */
+        long startTime = System.nanoTime();
+
+        switch (algo) {
+            case "1":
+                // Run MST Prims Algorithm
+                RunMSTPrimsAlgo(cities, startingCity);
+                System.out.println("Time taken: " + (System.nanoTime() - startTime) / 1000000 + "ms");
+                break;
+            case "2":
+                // Run Dijkstra Algorithm
+                RunDijkstraAlgo(cities, startingCity);
+                System.out.println("Time taken: " + (System.nanoTime() - startTime) / 1000000 + "ms");
+                break;
+            case "3":
+                // Run Nearest Neighbor Algorithm
+                RunNearestNeighborAlgo(cities, startingCity);
+                System.out.println("Time taken: " + (System.nanoTime() - startTime) / 1000000 + "ms");
+                break;
+            default:
+                System.out.println("Invalid Input");
+                break;
+        }
+    }
+
 
     public static void RunMSTPrimsAlgo(City[] cities, City startingCity) {
         /*
@@ -67,24 +99,6 @@ public class Main {
         System.out.println("Distance: " + result.getDistance());
     }
 
-
-    public static String[] ReadCities(String filename) {
-        /*
-         * ReadCities reads the content of a file and returns an array of strings.
-         * @param filename: String
-         * @return file_content: String[]
-         */
-        String[] file_content = {};
-        /* Read content from file, line by line, and store in file_content. */
-        try {
-            file_content = Files.readAllLines(Path.of(filename)).toArray(String[]::new);
-        } catch (IOException e) {
-            System.out.println("File not found. Please enter a valid file path.");
-            System.exit(0);
-        }
-        return file_content;
-    }
-
     // populateCity using the new HashMap -> CityManager Data Structure.
     public static City[] populateCity(String[] cities_string) {
         /*
@@ -95,7 +109,7 @@ public class Main {
         City[] cities = new City[cities_string.length];
 
         for (int i = 0; i < cities_string.length; i++) {
-            String[] city = cities_string[i].split("\t");
+            String[] city = cities_string[i].split(" ");
             cities[i] = new City(Integer.parseInt(city[0]), Float.parseFloat(city[1]), Float.parseFloat(city[2]));
         }
 

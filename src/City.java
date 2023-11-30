@@ -1,50 +1,59 @@
 public class City {
-    int City_ID;
-    float City_X_Location;
-    float City_Y_Location;
+    /*
+      * City class is used to store the city id and its x and y location.
+    */
+    int cityId;
+    float cityXLocation;
+    float cityYLocation;
 
     public City() {
-        City_ID = 1; // Default value, 1st city.
-        City_X_Location = 0; // Default value, 0.
-        City_Y_Location = 0; // Default value, 0.
+        cityId = 1; // Default value, 1st city.
+        cityXLocation = 0; // Default value, 0.
+        cityYLocation = 0; // Default value, 0.
     }
 
-    public City(int city_ID, float city_X_Location, float city_Y_Location) {
-        City_ID = city_ID;
-        City_X_Location = city_X_Location;
-        City_Y_Location = city_Y_Location;
+    public City(int cityId, float cityXLocation, float cityYLocation) {
+        /*
+          * Constructor for City class.
+          * @param cityId: The id of the city.
+          * @param cityXLocation: The x location of the city.
+          * @param cityYLocation: The y location of the city.
+        */
+        this.cityId = cityId;
+        this.cityXLocation = cityXLocation;
+        this.cityYLocation = cityYLocation;
     }
 
-    public int getCity_ID() {
-        return City_ID;
+    public int getCityId() {
+        return cityId;
     }
 
-    public void setCity_ID(int city_ID) {
-        City_ID = city_ID;
+    public void setCityId(int cityId) {
+        this.cityId = cityId;
     }
 
-    public float getCity_X_Location() {
-        return City_X_Location;
+    public float getCityXLocation() {
+        return cityXLocation;
     }
 
-    public void setCity_X_Location(float city_X_Location) {
-        City_X_Location = city_X_Location;
+    public void setCityXLocation(float cityXLocation) {
+        this.cityXLocation = cityXLocation;
     }
 
-    public float getCity_Y_Location() {
-        return City_Y_Location;
+    public float getCityYLocation() {
+        return cityYLocation;
     }
 
-    public void setCity_Y_Location(float city_Y_Location) {
-        City_Y_Location = city_Y_Location;
+    public void setCityYLocation(float cityYLocation) {
+        this.cityYLocation = cityYLocation;
     }
 
     @Override
     public String toString() {
         return "City{" +
-                "City_ID=" + City_ID +
-                ", City_X_Location=" + City_X_Location +
-                ", City_Y_Location=" + City_Y_Location +
+                "cityID=" + cityId +
+                ", cityXLocation=" + cityXLocation +
+                ", cityYLocation=" + cityYLocation +
                 '}';
     }
 

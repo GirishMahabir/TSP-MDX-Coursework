@@ -62,7 +62,7 @@ public class TSPNearestNeighbourAlgo {
         boolean[] visited = new boolean[cities.length]; // Used to keep track of visited cities.
         Arrays.fill(visited, false); // Initialize all values to false.
 
-        int currentCityIndex = startingCity.getCity_ID() - 1; // -1 because array index starts from 0
+        int currentCityIndex = startingCity.getCityId() - 1; // -1 because array index starts from 0
         visited[currentCityIndex] = true; // Mark starting city as visited.
         ArrayList<City> visitedCities = new ArrayList<>(); // Used to keep track of visited cities.
         visitedCities.add(cities[currentCityIndex]); // Add starting city to visited cities.
@@ -95,13 +95,13 @@ public class TSPNearestNeighbourAlgo {
         }
 
         // Add distance back to the starting city
-        totalDistance += distanceMatrix[currentCityIndex][startingCity.getCity_ID() - 1];
+        totalDistance += distanceMatrix[currentCityIndex][startingCity.getCityId() - 1];
         visitedCities.add(startingCity);
 
         // Convert ArrayList to Array (To keep standard return type)
         int[] visitedCitiesArray = new int[visitedCities.size()];
         for (int i = 0; i < visitedCities.size(); i++) {
-            visitedCitiesArray[i] = visitedCities.get(i).getCity_ID();
+            visitedCitiesArray[i] = visitedCities.get(i).getCityId();
         }
 
         return new AlgoResultDS(visitedCitiesArray, totalDistance);

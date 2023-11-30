@@ -59,9 +59,6 @@ public class TSPMSTPrimsAlgo {
                         priorityQueue.add(new EdgeDS(city, TSPCommon.Distance(currentEdge.getDestination(), city)));
                     }
                 }
-
-                // Print the size of the priority queue.
-                System.out.println("Priority Queue Size: " + priorityQueue.size());
             }
         }
 
@@ -96,7 +93,7 @@ public class TSPMSTPrimsAlgo {
         int[] tour = new int[cityList.size()];
         for (int i = 0; i < cityList.size(); i++) {
             City city = cityList.get(i);
-            tour[i] = city.getCity_ID();
+            tour[i] = city.getCityId();
         }
         return tour;
     }

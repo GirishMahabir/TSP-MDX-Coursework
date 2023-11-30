@@ -27,7 +27,7 @@ public class TSPDijkstraAlgo {
             int shortestPathIndex = ShortestPathIndex(distanceArray); // Get the shortest path index.
             City nextCity = cities[shortestPathIndex]; // Get the next city.
             // Add the next city to the path
-            Path.add(nextCity.getCity_ID());
+            Path.add(nextCity.getCityId());
 
             // Remove the next city from the array of cities.
             cities = RemoveCityFromArray(cities, nextCity);
@@ -39,7 +39,7 @@ public class TSPDijkstraAlgo {
         }
 
         // Add the starting city to the path
-        Path.add(tempCity.getCity_ID());
+        Path.add(tempCity.getCityId());
         // Add the distance from the last city to the starting city.
         distances += TSPCommon.Distance(tempCity, startingCity);
 
