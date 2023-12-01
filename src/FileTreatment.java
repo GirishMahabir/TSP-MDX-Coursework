@@ -11,6 +11,21 @@ public class FileTreatment {
       * Finally, it will return the fixed/clean array of lines (cities).
     */
 
+    public static void checkFileExists(String fileName) {
+        /*
+          * Check if the file exists.
+          * @param String: fileName -> Dataset File Path.
+          * @return String[]: String[] -> Array of lines from the file.
+        */
+        // Check if the file exists.
+        if (Files.exists(Path.of(fileName))) {
+            System.out.println("File exists, processing file...");
+        } else {
+            System.err.println("File does not exist.");
+            System.exit(0);
+        }
+    }
+
     public static String[] readFile(String fileName) {
         /*
           * Read file line by line and prepare an array of the dataset (line by line)

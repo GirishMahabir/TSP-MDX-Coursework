@@ -8,6 +8,9 @@ public class Main {
         System.out.print("Enter filename: ");
         String filename = scanner.nextLine();
 
+        // Chceck if filename exists.
+        FileTreatment.checkFileExists(filename);
+
         // Declare cities Variable (Array of cities)
         String[] citiesString = FileTreatment.processFile(filename);
         // Convert citiesString to cities
@@ -23,6 +26,15 @@ public class Main {
         // Ask for user input for algorithm.
         System.out.print("Enter algorithm: ");
         String algo = scanner.nextLine();
+
+        // Check if user input is valid.
+        if (!Arrays.asList("1", "2", "3").contains(algo)) {
+            System.out.println("Invalid Input");
+            System.exit(0);
+        }
+
+
+        System.out.println("Starting from city: " + cities[0].getCityId());
         // Run algorithm based on input.
         RunAlgoBasedOnInput(cities, cities[0], algo);
 
